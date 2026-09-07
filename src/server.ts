@@ -19,7 +19,7 @@ const contactLimter = rateLimit ({
 //Middleware
 app.use(cors({
     origin: process.env.NODE_ENV === 'production'
-    ? 'https://your-deployed-frontend.com'
+    ? 'https://my-portfolio-tau-ten-38.vercel.app'
     : 'http://localhost:5173',
 }));
 app.use(express.json());
