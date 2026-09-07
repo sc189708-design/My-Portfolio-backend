@@ -5,7 +5,7 @@
   "types": "module",
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts",
-    "bulid": "tsc",
+    "build": "tsc",
     "start": "node dist/server.js"
   },
   "keywords": [],
