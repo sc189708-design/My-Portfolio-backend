@@ -2,24 +2,16 @@ import dns from 'dns';
 import 'dotenv/config'
 import { Request, Response } from "express";
 import Contact from "../models/Contact";
-import nodemailer from "nodemailer";
+import { Resend } from 'resend';
 import { validationResult } from 'express-validator';
 
 dns.setDefaultResultOrder('ipv4first');
 
-const transpoter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth:{
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sumbitContact = async (req: Request, res: Response): Promise<void> => {
     const errors = validationResult(req)
-    if(!errors.isEmpty()){
+    if (!errors.isEmpty()) {
         res.status(500).json({
             false: true,
             errors: errors
@@ -35,9 +27,9 @@ export const sumbitContact = async (req: Request, res: Response): Promise<void> 
         const newContact = await Contact.create({ name, email, message });
 
         // Send yourself an email notification,
-        await transpoter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_USER,
+        await resend.emails.send({
+            from: "onboarding@resend.dev",
+            to: process.env.EMAIL_USER!,
             replyTo: email,
             subject: `New porfolio message from ${name}`,
             text: `Name: ${name}\nEmail: ${email}\n\nMessage${message}`
