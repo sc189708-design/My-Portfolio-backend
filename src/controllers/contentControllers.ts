@@ -1,8 +1,11 @@
+import dns from 'dns';
 import 'dotenv/config'
 import { Request, Response } from "express";
 import Contact from "../models/Contact";
 import nodemailer from "nodemailer";
 import { validationResult } from 'express-validator';
+
+dns.setDefaultResultOrder('ipv4first');
 
 const transpoter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
