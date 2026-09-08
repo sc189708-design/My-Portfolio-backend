@@ -32,7 +32,7 @@ export const sumbitContact = async (req: Request, res: Response): Promise<void> 
             to: process.env.EMAIL_USER!,
             replyTo: email,
             subject: `New porfolio message from ${name}`,
-            text: `Name: ${name}\nEmail: ${email}\n\nMessage${message}`
+            text: `Name: ${name}\nEmail: ${email}\n\nMessage:${message}`
         });
 
         res.status(200).json({
