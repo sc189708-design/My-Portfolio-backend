@@ -7,7 +7,7 @@ import { validationResult } from 'express-validator';
 const transpoter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
-    service: 'gmail',
+    secure: true,
     auth:{
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -17,7 +17,7 @@ const transpoter = nodemailer.createTransport({
 export const sumbitContact = async (req: Request, res: Response): Promise<void> => {
     const errors = validationResult(req)
     if(!errors.isEmpty()){
-        res.json(500).json({
+        res.status(500).json({
             false: true,
             errors: errors
         })
