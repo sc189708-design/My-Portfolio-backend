@@ -5,6 +5,8 @@ import nodemailer from "nodemailer";
 import { validationResult } from 'express-validator';
 
 const transpoter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
     service: 'gmail',
     auth:{
         user: process.env.EMAIL_USER,
