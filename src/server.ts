@@ -16,6 +16,8 @@ const contactLimter = rateLimit ({
     message: {success: false, Error: 'To many request, please try again later.'}
 });
 
+app.set('proxy', 1);
+
 //Middleware
 app.use(cors({
     origin: process.env.NODE_ENV === 'production'
