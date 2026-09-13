@@ -12,8 +12,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const sumbitContact = async (req: Request, res: Response): Promise<void> => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-        res.status(500).json({
-            false: true,
+        res.status(400).json({
+            success: false,
             errors: errors
         })
         return;
@@ -26,16 +26,19 @@ export const sumbitContact = async (req: Request, res: Response): Promise<void> 
         }
         const newContact = await Contact.create({ name, email, message });
 
-        // Send yourself an email notification,
-        await resend.emails.send({
-            from: "onboarding@resend.dev",
-            to: process.env.EMAIL_USER!,
-            replyTo: email,
-            subject: `New porfolio message from ${name}`,
-            text: `Name: ${name}\nEmail: ${email}\n\nMessage:${message}`
-        });
+        try {
+            await resend.emails.send({
+                from: "onboarding@resend.dev",
+                to: process.env.EMAIL_USER!,
+                replyTo: email,
+                subject: `New porfolio message from ${name}`,
+                text: `Name: ${name}\nEmail: ${email}\n\nMessage:${message}`
+            });
+        } catch (error) {
+            console.error('Contact saved, but email notification failed', error);
+        }
 
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             data: newContact,
         });

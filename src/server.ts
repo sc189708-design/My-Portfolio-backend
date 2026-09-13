@@ -29,7 +29,7 @@ app.use(helmet());
 connectDB();
 
 //Routes
-app.use('/api/contact', contactRoutes, contactLimter);
+app.use('/api/contact', contactLimter, contactRoutes);
 
 app.get('/', (req, res) => {
     res.send('Portfolio Backend is running')
