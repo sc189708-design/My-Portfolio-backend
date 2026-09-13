@@ -19,7 +19,7 @@ const contactLimter = rateLimit ({
 //Middleware
 app.use(cors({
     origin: process.env.NODE_ENV === 'production'
-    ? 'https://surajportfolio-woad-kappa.vercel.app/'
+    ? 'https://surajportfolio-woad-kappa.vercel.app'
     : 'http://localhost:5173',
 }));
 app.use(express.json());
